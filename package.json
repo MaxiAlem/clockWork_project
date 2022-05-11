@@ -1,0 +1,17 @@
+{
+  "name": "worldclock",
+  "version": "1.0.0",
+  "description": "project worldclock",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js "
+  },
+  "repository": "https://github.com/MaxiAlem/clockWork_project.git",
+  "author": "MaxiAlem <maerc.maxi@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "bootstrap": "^5.1.3"
+  }
+}
