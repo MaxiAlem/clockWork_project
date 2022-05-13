@@ -1,20 +1,10 @@
+import { deleteZone } from "../index.js";   
 
-
-
-const container = document.querySelector('#container');//traer aca los values del time
-const zoneList = document.querySelector('#zoneList');
-    // GET /timezones -> Obtiene todos los timezones.
-    // GET /timezones/:name -> Obtiene un timezone específico.
-    // PUT /timezones/:name -> Agrega un timezone específico al usuario.
-    // DELETE /timezones/:name -> Elimina un timezone específico del usuario.
-
-
+  
 const url = `http://worldtimeapi.org/api/timezone/`;
-let timezones = []
 
-
-
-async function dataList(){ //get a cada zona
+// GET /timezones -> Obtiene todos los timezones.
+async function dataList(){ 
 
     try {
         const res = await fetch(url);
@@ -35,86 +25,81 @@ function addDataList(zones){//agrega cada zona a la lista de sugeridos
     })
 }
 
-async function consultApi(){//get timezone especifico
+// GET /timezones/:name -> Obtiene un timezone específico.
+ function getZones(){//get timezone especifico
 
-    let search = document.querySelector('#search').value;
-
-    try {
-        const res = await fetch(`${url}${search}`);
-        const data = await res.json()
-        time(data)
-    } catch (error) {
-        console.log(error)
-    }
+    let name = document.querySelector('#search').value;
+    const urlName = (`${url}${name}`)
+     return urlName
 
 }
 
+async  function createHTML(timezones){ // PUT /timezones/:name -> Agrega un timezone específico al usuario.
+    cleanHTML()
+     if(timezones.length > 0){  //foreach
+        timezones.forEach(async zone =>{
+        //FETCH
+        consultApi()
+        async function consultApi(){
+            try {
+                const res = await fetch(zone);
+                const data = await res.json()
+                //console.log(data)
+                time(data)
+                } catch (error) {
+                console.log(error)
+                }
+        }
+        //FIX
+        async function time(data){
+           
+         const {timezone, datetime} = data
+                 //si cortamos el time offset, new Date(datetime) no nos devuelve nuestra hora local
+        let datetimeFix = datetime.slice(0, -6)
 
+        const dateFix = (datetimeFix =>{
+            const newDate = new Date(datetimeFix)
+            return new Intl.DateTimeFormat('es-AR', {dateStyle: 'medium'}).format(newDate)
+            })
+        const timeFix = (datetimeFix =>{
+            const newTime = new Date(datetimeFix)
+            return new Intl.DateTimeFormat('es-AR', {timeStyle: 'medium'}).format(newTime)     
+             }) 
 
-function time(data){
-    const {timezone, datetime} = data
+            //genHTML
+            const box = document.createElement('div');
+            box.className = 'col border border-4 rounded-3'
+            
+            const z =document.createElement('h2');
+            z.innerHTML = `${timezone}`;
 
-    //si cortamos el time offset, new Date(datetime) no nos devuelve nuestra hora local
-    let datetimeFix = datetime.slice(0, -6)
-   
-    const dateFix = (datetimeFix =>{
-        const newDate = new Date(datetimeFix)
-        return new Intl.DateTimeFormat('es-AR', {dateStyle: 'medium'}).format(newDate)
-    })
-    const timeFix = (datetime =>{
-        const newTime = new Date(datetime)
-        return new Intl.DateTimeFormat('es-AR', {timeStyle: 'medium'}).format(newTime)
-    })
-
-    const  newTimeObj = {
-        timezone,
-        date:dateFix(datetime),
-        time: timeFix(datetime)
-        };
-    function saveLocalSt(){
-        localStorage.setItem('timezones', JSON.stringify(timezones));
-    }
-    
-    console.log(newTimeObj)
-    timezones = [...timezones, newTimeObj]
-    saveLocalSt()//desps de cargar el nuevo value al array, lo enviamos al LS
-    //console.log(timezones)
-}
-function submitForm(e){
-    e.preventDefault()
-    consultApi();
-
-//crear HTML
-}
-function retrieveData(){
-    timezones = JSON.parse(localStorage.getItem('timezones'))
-    console.log
-    if(timezones.length > 0){
-        timezones.forEach(zone =>{
-            const box = document.createElement('div')
-
-            const timezone =document.createElement('h2');
-            timezone.innerHTML = `${zone.timezone}`
-            const date =document.createElement('h4');
-            date.innerHTML = `${zone.date}`
-            const time =document.createElement('h4');
-            time.innerHTML = `${zone.time}`
+            const t =document.createElement('h2');
+            t.innerHTML = `${timeFix(datetimeFix)}`;
+            
+            const d =document.createElement('h2');
+            d.innerHTML = `${dateFix(datetimeFix)}`;
 
             const deleteBtn=document.createElement('a')
             deleteBtn.textContent= 'X'
-
-
-            box.appendChild(timezone);
-            box.appendChild(date);
-            box.appendChild(time);
+            deleteBtn.onclick=()=>{
+            deleteZone(zone)
+            }
+            
+            box.appendChild(z);
+            box.appendChild(t)
+            box.appendChild(d);
             box.appendChild(deleteBtn)
             //
             container.appendChild(box)
-
-
+        }
+               
         })
     }
-    //createHTML()
 }
 
-export { dataList, submitForm, retrieveData}
+function cleanHTML(){
+    while(container.firstChild){
+        container.removeChild(container.firstChild)
+    }
+}
+export { dataList,getZones,createHTML}
