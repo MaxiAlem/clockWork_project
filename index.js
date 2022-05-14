@@ -49,15 +49,5 @@ function deleteZone(thiszone){
     
     }
 
-    // if(elmTime.length > 0){
-        
-    //     elmTime.forEach(t => {
-    //     setInterval(() => {
-    //         t
-    //     }, 1000);
-        
-    //     });
-    // }
-
 
 export {deleteZone, updateLS}

@@ -70,7 +70,7 @@ async  function createHTML(timezones){ // PUT /timezones/:name -> Agrega un time
  
             //genHTML
             const box = document.createElement('div');
-            box.className = 'col border border-4 rounded-3 d-flex flex-column m-2 '
+            box.className = ' mw50 col border border-4 rounded-3 d-flex flex-column m-2 '
             
             const z =document.createElement('h2');
             z.className= 'fs-2 text-wrap'
