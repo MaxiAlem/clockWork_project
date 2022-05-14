@@ -1,9 +1,8 @@
 import {dataList, getZones,createHTML } from './js/api.js';
 
 const submit = document.querySelector('#submit');
-const container = document.querySelector('#container');//traer aca los values del time
+const container = document.querySelector('#container');
 const zoneList = document.querySelector('#zoneList');
-//const timeP = document.querySelector('.time') ////
 const url = `http://worldtimeapi.org/api/timezone/`;
 let timezones = []
 
