@@ -3,7 +3,7 @@ import {dataList, getZones,createHTML } from './js/api.js';
 const submit = document.querySelector('#submit');
 const container = document.querySelector('#container');
 const zoneList = document.querySelector('#zoneList');
-const url = `http://worldtimeapi.org/api/timezone/`;
+const url = `https://worldtimeapi.org/api/timezone/`;
 let timezones = []
 
 //eventos

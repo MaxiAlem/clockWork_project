@@ -1,7 +1,7 @@
 import { deleteZone, updateLS } from "../index.js";   
 
   
-const url = `http://worldtimeapi.org/api/timezone/`;
+const url = `https://worldtimeapi.org/api/timezone/`;
 
 // GET /timezones -> Obtiene todos los timezones.
 async function dataList(){ 
