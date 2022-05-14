@@ -2,7 +2,6 @@ form.form input[type="submit"] { display: none;}
 
 .mw50{max-width: 50%;}
 @media only screen and (max-width: 768px) {
-    /* For mobile phones: */
     .mw50{
         max-width: 100%;
     }

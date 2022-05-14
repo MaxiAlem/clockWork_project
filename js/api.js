@@ -61,11 +61,15 @@ async  function createHTML(timezones){ // PUT /timezones/:name -> Agrega un time
 
         const dateFix = (datetimeFix =>{
             const newDate = new Date(datetimeFix)
-            return new Intl.DateTimeFormat('es-AR', {dateStyle: 'medium'}).format(newDate)
+            return new Intl.DateTimeFormat('en', {dateStyle: 'short'}).format(newDate)
             })
         const timeFix = (datetimeFix =>{
             const newTime = new Date(datetimeFix)
-            return new Intl.DateTimeFormat('es-AR', {timeStyle: 'medium'}).format(newTime)     
+            return new Intl.DateTimeFormat('en', {
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12:true
+              }).format(newTime)     
              }) 
  
             //genHTML
@@ -73,7 +77,7 @@ async  function createHTML(timezones){ // PUT /timezones/:name -> Agrega un time
             box.className = ' mw50 col border border-4 rounded-3 d-flex flex-column m-2 '
             
             const z =document.createElement('h2');
-            z.className= 'fs-2 text-wrap'
+            z.className= 'fs-1 text-wrap'
             z.innerHTML = `${timezone}`;
 
             const t =document.createElement('p');
@@ -82,7 +86,7 @@ async  function createHTML(timezones){ // PUT /timezones/:name -> Agrega un time
             
             
             const d =document.createElement('p');
-            t.className= 'fs-3'
+            d.className= 'fs-3'
             d.innerHTML = `${dateFix(datetimeFix)}`;
 
             const deleteBtn=document.createElement('a')
@@ -101,9 +105,8 @@ async  function createHTML(timezones){ // PUT /timezones/:name -> Agrega un time
             
             box.appendChild(deleteBtn)
             box.appendChild(z);
-            box.appendChild(t)
             box.appendChild(d);
-            
+            box.appendChild(t);
             //
             container.appendChild(box)
         }

@@ -14,6 +14,7 @@ function eventListener(){
     
     submit.addEventListener('click', submitForm)
     document.addEventListener('DOMContentLoaded', ()=> {
+        document.getElementById("search").focus();
         dataList();//lista de sugerencias
         
         timezones = JSON.parse(localStorage.getItem('timezones')) || [];
