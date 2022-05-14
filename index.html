@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/css.css">
     <title>World Clock</title>
 </head>
 <body class="bg-dark text-white">
@@ -12,21 +13,33 @@
         <h1 class="p-5 text-center">WorldClock</h1>
         
     </div> 
-    <div>
-      <form class="m-0 pb-5 text-center">
-        <input id="search" type="search" placeholder="search..." list="zoneList"
+    <div class="m-5 pb-3">
+      <form  class=" form text-center">
+        <input id="search" type="search" placeholder="select a city" list="zoneList"
           class=" mx-md-auto rounded rounded-3"/>
-        <input id="submit" type="submit" placeholder="search"
-         class="btn btn-outline-light u-full-width" />
+          <label>
+          <input id="submit" type="submit" value="search"
+         class="btn btn-outline-light u-full-width" /> 
+         <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-plus py-1" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <circle cx="12" cy="12" r="9" />
+          <line x1="9" y1="12" x2="15" y2="12" />
+          <line x1="12" y1="9" x2="12" y2="15" />
+        </svg></label>
+        
       </form>
       <datalist id="zoneList">
         
       </datalist>
+      <p class="text-center"> All clocks auto-update in 60 seconds</p>
     </div>
-    <div id="container"
-      class="row row-cols-3 mx-lg-5">
+    <div class="container">
+      <div id="container"
+        class="row">
         
+      </div>
     </div>
+    
     <div id="root"></div>
     <script type="module" src="/index.js"></script>
 </body>

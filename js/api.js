@@ -1,4 +1,4 @@
-import { deleteZone } from "../index.js";   
+import { deleteZone, updateLS } from "../index.js";   
 
   
 const url = `http://worldtimeapi.org/api/timezone/`;
@@ -36,10 +36,12 @@ function addDataList(zones){//agrega cada zona a la lista de sugeridos
 
 async  function createHTML(timezones){ // PUT /timezones/:name -> Agrega un timezone específico al usuario.
     cleanHTML()
+       
      if(timezones.length > 0){  //foreach
         timezones.forEach(async zone =>{
         //FETCH
         consultApi()
+        
         async function consultApi(){
             try {
                 const res = await fetch(zone);
@@ -65,36 +67,49 @@ async  function createHTML(timezones){ // PUT /timezones/:name -> Agrega un time
             const newTime = new Date(datetimeFix)
             return new Intl.DateTimeFormat('es-AR', {timeStyle: 'medium'}).format(newTime)     
              }) 
-
+ 
             //genHTML
             const box = document.createElement('div');
-            box.className = 'col border border-4 rounded-3'
+            box.className = 'col border border-4 rounded-3 d-flex flex-column m-2 '
             
             const z =document.createElement('h2');
+            z.className= 'fs-2 text-wrap'
             z.innerHTML = `${timezone}`;
 
-            const t =document.createElement('h2');
-            t.innerHTML = `${timeFix(datetimeFix)}`;
+            const t =document.createElement('p');
+            t.className = 'fs-3'   
+            t.innerHTML = `${timeFix(datetimeFix)}`; 
             
-            const d =document.createElement('h2');
+            
+            const d =document.createElement('p');
+            t.className= 'fs-3'
             d.innerHTML = `${dateFix(datetimeFix)}`;
 
             const deleteBtn=document.createElement('a')
             deleteBtn.textContent= 'X'
+        //     deleteBtn.innerHTML= `
+        //     <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-x" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ff2825" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        //     <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        //     <circle cx="12" cy="12" r="9" />
+        //     <path d="M10 10l4 4m0 -4l-4 4" />
+        //   </svg>`
+           deleteBtn.className=' text-end text-danger text-decoration-none fw-bolder fs-2'
+        //deleteBtn.className ='position-relative top-0 start-100'
             deleteBtn.onclick=()=>{
             deleteZone(zone)
             }
             
+            box.appendChild(deleteBtn)
             box.appendChild(z);
             box.appendChild(t)
             box.appendChild(d);
-            box.appendChild(deleteBtn)
+            
             //
             container.appendChild(box)
         }
-               
         })
     }
+    updateLS()
 }
 
 function cleanHTML(){
@@ -102,4 +117,9 @@ function cleanHTML(){
         container.removeChild(container.firstChild)
     }
 }
+
 export { dataList,getZones,createHTML}
+
+
+
+
